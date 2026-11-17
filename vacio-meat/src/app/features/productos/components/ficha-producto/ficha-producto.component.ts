@@ -23,7 +23,7 @@ import { IconoFichaComponent } from '../icono-ficha/icono-ficha.component';
       }
     </ng-template>
 
-    <section class="section">
+    <section class="section" id="servicio">
       <div class="wrap">
         <app-titulo-seccion>Producto, servicio e innovación</app-titulo-seccion>
 

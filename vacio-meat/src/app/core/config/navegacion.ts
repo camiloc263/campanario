@@ -1,12 +1,15 @@
 export interface ItemNav {
   ruta: string;
   texto: string;
+  icono?: string;
+  exacto?: boolean;
+  destacado?: boolean;
 }
 
 export const NAV: ItemNav[] = [
-  { ruta: '/', texto: 'Inicio' },
-  { ruta: '/historia', texto: 'Nosotros' },
-  { ruta: '/productos', texto: 'El proyecto' },
-  { ruta: '/proceso', texto: 'Proceso' },
-  { ruta: '/contacto', texto: 'Contacto' },
+  { ruta: '/', texto: 'Inicio', icono: '🏠', exacto: true },
+  { ruta: '/historia', texto: 'Nosotros', icono: '🐖' },
+  { ruta: '/productos', texto: 'El proyecto', icono: '🥩' },
+  { ruta: '/proceso', texto: 'Proceso', icono: '⚙️' },
+  { ruta: '/contacto', texto: 'Contacto', icono: '📲', destacado: true }
 ];

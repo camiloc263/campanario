@@ -7,7 +7,7 @@ import { DIAPOSITIVAS, HERO } from '../../data/hero.data';
   standalone: true,
   imports: [BotonComponent],
   template: `
-    <section class="hero">
+    <section class="hero" id="hero" >
       <div class="wrap grid">
 
         <!-- ===== Galería ===== -->
@@ -37,7 +37,7 @@ import { DIAPOSITIVAS, HERO } from '../../data/hero.data';
               }
             </div>
 
-            <div class="vel"></div>
+            <div class="vel" ></div>
 
             @if (activas().length > 1) {
               <button type="button" class="flecha ant" aria-label="Imagen anterior" (click)="mover(-1)">
@@ -78,7 +78,7 @@ import { DIAPOSITIVAS, HERO } from '../../data/hero.data';
           </div>
 
           <!-- Tarjetas flotantes -->
-          <div class="flota f1">
+          <div class="flota f1" >
             <span class="f-ico">
               <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9"
                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -94,7 +94,7 @@ import { DIAPOSITIVAS, HERO } from '../../data/hero.data';
         </div>
 
         <!-- ===== Texto ===== -->
-        <div class="texto">
+        <div class="texto" >
           <div class="pills" style="--d: 0">
             <span class="pill">
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"
@@ -136,7 +136,7 @@ import { DIAPOSITIVAS, HERO } from '../../data/hero.data';
         </div>
       </div>
 
-      <button type="button" class="bajar" (click)="bajar()">
+      <button type="button" class="bajar" (click)="bajar()" id="hero">
         Descubre más
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4"
              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>

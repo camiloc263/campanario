@@ -26,7 +26,7 @@ export const TITULOS = {
 export const FAMILIAS_VINCULADAS = 20;
 
 export const FOTOS = {
-  paisaje: { src: 'images/historia/paisaje-linares.png', alt: 'Paisaje rural de Linares, Nariño' },
+  paisaje: { src: 'images/validacion-producto/validacion.jpg', alt: 'Paisaje rural de Linares, Nariño' },
   empaques: { src: 'images/historia/nosotros.png', alt: 'Cortes de cerdo empacados al vacío sobre una tabla de madera' },
 };
 

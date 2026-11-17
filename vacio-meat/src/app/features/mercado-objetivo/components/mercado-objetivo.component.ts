@@ -10,7 +10,7 @@ import {
   standalone: true,
   imports: [RouterLink],
   template: `
-    <section class="section">
+    <section class="section" id="mercado">
       <div class="wrap">
         <header class="cab">
           <h2>{{ cab.titulo }}</h2>
@@ -91,17 +91,6 @@ import {
       </div>
     </section>
 
-    <!-- ===== Estudio de mercado ===== -->
-    <section class="estudio">
-      <div class="wrap estudio-in">
-        <div>
-          <span class="kicker">{{ estudio.kicker }}</span>
-          <h3>{{ estudio.titulo }}</h3>
-          <p>{{ estudio.texto }}</p>
-        </div>
-        <a class="btn-claro" [routerLink]="[]" [fragment]="estudio.fragmento">{{ estudio.boton }}</a>
-      </div>
-    </section>
   `,
   styles: [`
     :host { display: block; --oro: #e6c79c; }

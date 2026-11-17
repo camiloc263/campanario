@@ -1,6 +1,6 @@
 export const CONTACTO = {
-  telefono: '+57 300 000 0000',
-  whatsapp: '573000000000',
+  telefono: '+57 3183117313',
+  whatsapp: '573183117313',
   email: 'email@vaciomeat.com',
   direccion: 'Cl 5 #44-20, Linares, Nariño',
 };

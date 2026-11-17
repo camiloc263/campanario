@@ -8,7 +8,7 @@ import { PRODUCTOS } from '../../data/productos.data';
   standalone: true,
   imports: [TituloSeccionComponent, ProductoCardComponent],
   template: `
-    <section class="section">
+    <section class="section" id="lider">
       <div class="wrap">
         <app-titulo-seccion>Perfil del líder y descripción del proyecto</app-titulo-seccion>
         <div class="grid">

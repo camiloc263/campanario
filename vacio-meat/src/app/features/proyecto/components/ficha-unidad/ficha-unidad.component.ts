@@ -24,7 +24,7 @@ import { BLOQUES, BloqueFicha, CABECERA, DatoFicha } from '../../data/ficha-unid
       </svg>
     </ng-template>
 
-    <section class="section">
+    <section class="section" id="ficha-tecnica">
       <div class="wrap">
         <header class="cabecera">
           <h2>{{ cab.titulo }}</h2>

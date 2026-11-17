@@ -7,12 +7,13 @@ type Estado = 'editando' | 'enviando' | 'enviada' | 'error';
   selector: 'app-encuesta-validacion',
   standalone: true,
   template: `
-    <section class="section">
+    <section class="section" id="encuesta">
       <div class="wrap">
         <header class="cab">
           <h2>{{ info.titulo }}</h2>
           <p>{{ info.intro }}</p>
         </header>
+        
 
         @if (estado() === 'enviada') {
           <!-- ===== Gracias ===== -->
@@ -74,7 +75,7 @@ type Estado = 'editando' | 'enviando' | 'enviada' | 'error';
           </div>
 
           <!-- ===== Barra de progreso y envío ===== -->
-          <div class="barra" [class.completa]="faltan() === 0">
+          <div class="barra" [class.completa]="faltan() === 0" >
             <div class="prog">
               <span class="prog-txt" aria-live="polite">{{ respondidas() }} de {{ total }} respondidas</span>
               <div class="pista" role="progressbar" aria-label="Progreso de la encuesta"
@@ -105,6 +106,8 @@ type Estado = 'editando' | 'enviando' | 'enviada' | 'error';
         }
       </div>
     </section>
+    
+   
   `,
   styles: [`
     :host { display: block; }

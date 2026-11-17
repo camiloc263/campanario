@@ -9,7 +9,7 @@ type ClaveFoto = keyof typeof FOTOS;
   selector: 'app-ficha-comercializacion',
   standalone: true,
   template: `
-    <section class="section band">
+    <section class="section band" id="validacion">
       <div class="wrap">
         <header class="cab">
           <h2>{{ cab.titulo }}</h2>

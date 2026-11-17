@@ -12,6 +12,16 @@ import { FooterComponent } from './core/layout/footer/footer.component';
     <main><router-outlet /></main>
     <app-footer />
   `,
-  styles: [`:host { display: flex; flex-direction: column; min-height: 100vh; } main { flex: 1; }`],
+  styles: [`
+    :host { 
+      display: flex; 
+      flex-direction: column; 
+      min-height: 100vh; 
+    } 
+    main { 
+      flex: 1; 
+      padding-top: 73px; /* Espacio exacto para que el contenido no quede debajo del header fijo */
+    }
+  `],
 })
-export class AppComponent {}
+export class AppComponent { }

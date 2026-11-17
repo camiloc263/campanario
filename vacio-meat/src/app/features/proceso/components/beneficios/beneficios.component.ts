@@ -8,7 +8,7 @@ import { Beneficio } from '../../../../shared/models/beneficio.model';
   standalone: true,
   imports: [TituloSeccionComponent],
   template: `
-    <section class="section">
+    <section class="section" id="problema">
       <div class="wrap">
         <app-titulo-seccion>El problema</app-titulo-seccion>
 
