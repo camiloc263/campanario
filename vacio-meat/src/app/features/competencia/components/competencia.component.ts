@@ -10,7 +10,7 @@ type Vista = 'tarjetas' | 'matriz';
   selector: 'app-competencia',
   standalone: true,
   template: `
-    <section class="section">
+    <section class="section" id="competencia">
       <div class="wrap">
         <header class="cab">
           <h2>{{ cab.titulo }}</h2>

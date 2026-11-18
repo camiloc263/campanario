@@ -141,7 +141,7 @@ export const BLOQUES: BloqueCanvas[] = [
         items: [
             'Única iniciativa local con empacado al vacío industrial y trazabilidad sanitaria completa en granja.',
             'Economía circular integrada (cero vertimientos mediante compostaje orgánico).',
-            'Cadena corta de comercialización directa liderada por Orlando Cuaran y red asociativa local.',
+            'Cadena corta de comercialización directa liderada por Jhonjan Portilla y red asociativa local.',
         ],
     },
 ];

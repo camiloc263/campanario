@@ -6,11 +6,12 @@ import { ESTRUCTURA_ORGANIZACIONAL_DATA } from '../data/estructura-organizaciona
   selector: 'app-estructura-organizacional',
   standalone: true,
   imports: [CommonModule],
-  template: `
+  template:
+    ` 
     <div class="wrap-org">
       <!-- Encabezado Minimalista -->
       <div class="org-header">
-        <div>
+        <div >
           <span class="badge-sec">{{ data.seccion }}</span>
           <h2>{{ data.titulo }}</h2>
         </div>
@@ -19,7 +20,7 @@ import { ESTRUCTURA_ORGANIZACIONAL_DATA } from '../data/estructura-organizaciona
 
       <!-- Barra Interactiva de Filtros -->
       <div class="interactive-bar">
-        <button class="filter-btn" [class.active]="filtroActivo === 'todos'" (click)="filtrar('todos')">Ver Todo</button>
+        <button id="organizacional" class="filter-btn" [class.active]="filtroActivo === 'todos'" (click)="filtrar('todos')">Ver Todo</button>
         <button class="filter-btn" [class.active]="filtroActivo === 'direccion'" (click)="filtrar('direccion')">Dirección Estratégica</button>
         <button class="filter-btn" [class.active]="filtroActivo === 'produccion'" (click)="filtrar('produccion')">Producción y Planta</button>
         <button class="filter-btn" [class.active]="filtroActivo === 'administrativa'" (click)="filtrar('administrativa')">Gestión Administrativa</button>
@@ -43,7 +44,7 @@ import { ESTRUCTURA_ORGANIZACIONAL_DATA } from '../data/estructura-organizaciona
       </div>
 
       <!-- Área Operativa (Cuadrícula) -->
-      <div class="org-grid" *ngIf="mostrarOperativo">
+      <div class="org-grid" *ngIf="mostrarOperativo" >
         <div class="role-card" [class.highlight-card]="filtroActivo === 'produccion' || filtroActivo === 'administrativa'" *ngFor="let rol of equipoFiltrado">
           <div class="role-top">
             <div class="role-icon">{{ rol.icono }}</div>
@@ -61,6 +62,7 @@ import { ESTRUCTURA_ORGANIZACIONAL_DATA } from '../data/estructura-organizaciona
         </div>
       </div>
     </div>
+    
   `,
   styles: [`
     :root {

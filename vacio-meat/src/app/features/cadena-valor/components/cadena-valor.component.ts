@@ -42,7 +42,7 @@ import { CABECERA, ETAPAS, PILARES, SELLOS } from '../data/cadena-valor.data';
       }
     </ng-template>
 
-    <section class="section">
+    <section class="section" id="proyeccion">
       <div class="wrap">
 
         <header class="cab">

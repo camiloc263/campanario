@@ -4,21 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-nosotros',
   standalone: true,
   template: `
-    <section class="section band">
-      <div class="wrap grid">
-        <div class="foto">
-          <img src="images/historia/nosotros.png" alt="Carniceros de Linares cortando carne de cerdo en el taller"
-               width="560" height="380" loading="lazy">
-        </div>
-        <div>
-          <h1>LIDERAZGO Y UBICACIÓN</h1>
-          <br>
-          <h4>Líder / Representante: <p>Orlando Cuaran.</p></h4>
-          <h4>Líder / Proyecto: <p>Granja Porcícola El Campanario.</p></h4>
-          <h4>Ubicación propuesta: <p>Zona rural / finca en el municipio de Linares, Nariño.</p></h4>
-        </div>
-      </div>
-    </section>
+    
   `,
   styles: [`
     .band { background: var(--band); }

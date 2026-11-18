@@ -13,7 +13,7 @@ export const ESTRUCTURA_ORGANIZACIONAL_DATA = {
     gerencia: {
         cargo: 'Administración / Gerencia',
         nivel: 'Dirección Estratégica',
-        responsable: 'Orlando Cuaran',
+        responsable: 'Jhojan Portilla',
         funcion: 'Planeación estratégica, coordinación general del negocio, gestión comercial y representación asociativa.',
         icono: '👔'
     } as RolEquipo,

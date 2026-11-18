@@ -105,7 +105,7 @@ export const FILAS_MATRIZ: FilaMatriz[] = [
     propia: true,
     precio: { tipo: 'si', texto: 'Competitivo directo' },
     vacio: { tipo: 'si', texto: 'Sí (sin conservantes)' },
-    canal: { tipo: 'si', texto: 'Directo (Orlando Cuaran)' },
+    canal: { tipo: 'si', texto: 'Directo (Jhojan Portilla)' },
     circular: { tipo: 'si', texto: 'Compostaje integral' },
   },
   {
@@ -135,7 +135,7 @@ export const DIFERENCIAL = {
   insignia: 'Propuesta de valor diferencial',
   titulo: 'Diferencial de la Granja Porcícola El Campanario',
   texto:
-    'Además de ofrecer carne de cerdo fresca y magra de la más alta calidad, implementa tecnología de empacado al vacío para garantizar una mayor vida útil e higiene superior sin conservantes, un modelo de economía circular (aprovechamiento de residuos para compostaje) y comercialización directa sin intermediarios desde la granja de Orlando Cuaran hasta los hogares y comercios de Linares.',
+    'Además de ofrecer carne de cerdo fresca y magra de la más alta calidad, implementa tecnología de empacado al vacío para garantizar una mayor vida útil e higiene superior sin conservantes, un modelo de economía circular (aprovechamiento de residuos para compostaje) y comercialización directa sin intermediarios desde la granja de Jhojan Portilla hasta los hogares y comercios de Linares.',
   pilares: [
     {
       icono: 'escudo',
@@ -153,7 +153,7 @@ export const DIFERENCIAL = {
       icono: 'personas',
       etiqueta: 'Canal directo',
       titulo: 'Venta directa sin intermediarios',
-      texto: 'Desde la granja de Orlando Cuaran directamente hasta los hogares y comercios de Linares.',
+      texto: 'Desde la granja de Jhonjan Portilla directamente hasta los hogares y comercios de Linares.',
     },
   ] as Pilar[],
 };

@@ -1,26 +1,40 @@
 import {
-  afterNextRender, Component, DestroyRef, ElementRef, HostListener, effect, inject, signal, viewChild, viewChildren,
+  afterNextRender,
+  Component,
+  DestroyRef,
+  ElementRef,
+  HostListener,
+  effect,
+  inject,
+  signal,
+  viewChild,
+  viewChildren,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 
 export interface ItemNav {
-  ruta: string;          // '/' o '/#id-de-la-seccion'
+  ruta: string;
   texto: string;
-  destacado?: boolean;   // se muestra como botón al final
+  destacado?: boolean;
+  exacto?: boolean;
 }
 
-/** Cada enlace con "#" debe coincidir con el id de una sección de la página de inicio. */
 export const NAV: ItemNav[] = [
-  { ruta: '/', texto: 'Inicio' },
-  { ruta: '/#lider', texto: 'Perfil del líder' },
-  { ruta: '/#problema', texto: 'El problema' },
+  { ruta: '/', texto: 'Inicio', exacto: true },
+  { ruta: '/#lider', texto: 'Líder' },
+  { ruta: '/#problema', texto: 'Problema' },
   { ruta: '/#servicio', texto: 'Innovación' },
   { ruta: '/#ficha-tecnica', texto: 'Ficha técnica' },
   { ruta: '/#validacion', texto: 'Validación' },
   { ruta: '/#encuesta', texto: 'Encuesta' },
-  { ruta: '/#mercado', texto: 'Mercado', destacado: true },
+  { ruta: '/#mercado', texto: 'Mercado' },
+  { ruta: '/#competencia', texto: 'Competencia' },
+  { ruta: '/#organizacional', texto: 'Org.' }, // Abreviado para ganar espacio
+  { ruta: '/#financiera', texto: 'Financiera' },
+  { ruta: '/#canvas', texto: 'Canvas' },
+  { ruta: '/#proyeccion', texto: 'Proyección' },
 ];
 
 const idDe = (ruta: string): string => ruta.split('#')[1] ?? '';
@@ -32,20 +46,20 @@ const idDe = (ruta: string): string => ruta.split('#')[1] ?? '';
     <header class="top" [class.scrolled]="scrolled()" [class.oculto]="oculto()">
       <div class="wrap barra">
 
-        <!-- Marca (abre el logo en grande) -->
+        <!-- Marca -->
         <button type="button" class="brand" (click)="abrirLogo()" aria-label="Ver el logo en grande">
           @if (!logoRoto()) {
-            <img src="images/brand/logo.png" alt="" width="38" height="38" (error)="logoRoto.set(true)">
+            <img src="images/brand/logo.png" alt="Carnes Campanario" (error)="logoRoto.set(true)">
           } @else {
-            <span class="mono" aria-hidden="true">EC</span>
+            <span class="mono" aria-hidden="true">CC</span>
           }
           <span class="brand-txt">
-            <strong>Carnes Campanario</strong>
+            <strong>Campanario</strong>
             <small>Linares · Nariño</small>
           </span>
         </button>
 
-        <!-- Navegación de escritorio -->
+        <!-- Navegación de escritorio optimizada para 12 elementos -->
         <nav class="nav" #nav aria-label="Navegación principal">
           <ul>
             @for (it of items; track it.ruta; let i = $index) {
@@ -59,7 +73,7 @@ const idDe = (ruta: string): string => ruta.split('#')[1] ?? '';
                 [style.transform]="'translateX(' + ind().x + 'px)'" [style.width.px]="ind().w"></span>
         </nav>
 
-        <!-- Botón de menú (móvil) -->
+        <!-- Botón de menú móvil -->
         <button type="button" class="burger" [class.on]="menuAbierto()" [attr.aria-expanded]="menuAbierto()"
                 aria-controls="menu-movil" [attr.aria-label]="menuAbierto() ? 'Cerrar menú' : 'Abrir menú'"
                 (click)="menuAbierto.set(!menuAbierto())">
@@ -97,7 +111,7 @@ const idDe = (ruta: string): string => ruta.split('#')[1] ?? '';
         @if (!logoRoto()) {
           <img src="images/brand/logo.png" alt="Logo de Carnes Campanario">
         } @else {
-          <span class="mono grande" aria-hidden="true">EC</span>
+          <span class="mono grande" aria-hidden="true">CC</span>
         }
       </div>
       <h3 id="logo-titulo">Carnes Campanario</h3>
@@ -107,57 +121,54 @@ const idDe = (ruta: string): string => ruta.split('#')[1] ?? '';
   styles: [`
     :host { display: block; }
 
-    /* ---------- Barra ---------- */
     .top { position: fixed; inset: 0 0 auto 0; z-index: 1000; border-bottom: 1px solid transparent;
-           background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(14px) saturate(1.4);
+           background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(14px) saturate(1.4);
            transition: transform .35s ease, border-color .3s ease, box-shadow .3s ease; }
-    .top.scrolled { border-bottom-color: var(--line); box-shadow: 0 6px 24px rgba(0,0,0,.05); }
+    .top.scrolled { border-bottom-color: var(--line); box-shadow: 0 6px 24px rgba(0,0,0,.06); }
     .top.oculto { transform: translateY(-101%); }
     .top:focus-within { transform: none; }
-    .barra { height: var(--header-h, 64px); display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+    
+    /* Contenedor principal ensanchado al máximo (1680px) para alojar todos los enlaces */
+    .barra { max-width: 1680px; height: var(--header-h, 72px); display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0 1rem; }
 
-    /* ---------- Marca ---------- */
-    .brand { display: flex; align-items: center; gap: .7rem; padding: .25rem .5rem .25rem 0; background: none; border: 0;
-             font: inherit; color: inherit; text-align: left; cursor: pointer; }
-    .brand img { width: 100px; height: 70px; object-fit: contain; transition: transform .3s ease; }
-    .brand:hover img, .brand:hover .mono { transform: rotate(-6deg) scale(1.08); }
+    /* Marca compacta y limpia */
+    .brand { display: flex; align-items: center; gap: 0.5rem; padding: 0.2rem 0; background: none; border: 0;
+             font: inherit; color: inherit; text-align: left; cursor: pointer; flex-shrink: 0; }
+    .brand img { height: 42px; width: auto; max-width: 120px; object-fit: contain; transition: transform .3s ease; }
+    .brand:hover img, .brand:hover .mono { transform: scale(1.04); }
     .mono { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: var(--brand);
-            color: #fff; font-size: .8rem; font-weight: 800; letter-spacing: .02em; transition: transform .3s ease; }
+            color: #fff; font-size: .8rem; font-weight: 800; }
     .mono.grande { width: 96px; height: 96px; font-size: 1.6rem; }
-    .brand-txt { display: grid; gap: .1rem; }
-    .brand-txt strong { font-size: .98rem; font-weight: 800; letter-spacing: -.01em; line-height: 1.1; color: var(--ink); }
-    .brand-txt small { font-size: .66rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--wood); }
+    .brand-txt { display: grid; gap: 0; }
+    .brand-txt strong { font-size: 0.88rem; font-weight: 800; line-height: 1.1; color: var(--ink); white-space: nowrap; }
+    .brand-txt small { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--wood); }
 
-    /* ---------- Navegación ---------- */
+    /* Navegación ultra compacta para que quepan todos los ítems */
     .nav { position: relative; }
-    .nav ul { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: .15rem; }
-    .link { display: block; padding: .55rem .75rem; border-radius: 6px; font-size: .84rem; font-weight: 600;
+    .nav ul { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 0.05rem; }
+    .link { display: block; padding: 0.35rem 0.45rem; border-radius: 5px; font-size: 0.73rem; font-weight: 600;
             white-space: nowrap; text-decoration: none; color: var(--muted); transition: color .2s ease, background .2s ease; }
-    .link:hover, .link.on { color: var(--ink); }
-    .link.cta { margin-left: .5rem; padding: .5rem 1.05rem; border: 1.5px solid var(--brand); border-radius: 999px; color: var(--brand); }
+    .link:hover, .link.on { color: var(--ink); background: color-mix(in srgb, var(--brand) 6%, transparent); }
+    .link.cta { margin-left: 0.2rem; padding: 0.35rem 0.75rem; border: 1.5px solid var(--brand); border-radius: 999px; color: var(--brand); font-size: 0.73rem; }
     .link.cta:hover, .link.cta.on { background: var(--brand); color: #fff; }
 
-    /* subrayado deslizante bajo el enlace activo */
     .ind { position: absolute; left: 0; bottom: 2px; height: 2px; border-radius: 2px; background: var(--brand); opacity: 0;
-           transition: transform .35s cubic-bezier(.4, 0, .2, 1), width .35s cubic-bezier(.4, 0, .2, 1), opacity .2s ease; }
+           transition: transform .3s cubic-bezier(.4, 0, .2, 1), width .3s cubic-bezier(.4, 0, .2, 1), opacity .2s ease; }
     .ind.vis { opacity: 1; }
 
-    /* ---------- Progreso de lectura ---------- */
     .progreso { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; overflow: hidden; pointer-events: none; }
     .progreso span { display: block; height: 100%; transform-origin: left; transform: scaleX(0);
                      background: linear-gradient(90deg, var(--brand), var(--wood)); }
 
-    /* ---------- Botón de menú ---------- */
-    .burger { display: none; position: relative; width: 42px; height: 42px; background: none; border: 0; cursor: pointer; }
-    .burger i { position: absolute; left: 11px; right: 11px; height: 2px; border-radius: 2px; background: var(--ink);
+    .burger { display: none; position: relative; width: 40px; height: 40px; background: none; border: 0; cursor: pointer; flex-shrink: 0; }
+    .burger i { position: absolute; left: 10px; right: 10px; height: 2px; border-radius: 2px; background: var(--ink);
                 transition: transform .3s ease, top .3s ease; }
-    .burger i:nth-child(1) { top: 16px; }
-    .burger i:nth-child(2) { top: 24px; }
-    .burger.on i:nth-child(1) { top: 20px; transform: rotate(45deg); }
-    .burger.on i:nth-child(2) { top: 20px; transform: rotate(-45deg); }
+    .burger i:nth-child(1) { top: 15px; }
+    .burger i:nth-child(2) { top: 23px; }
+    .burger.on i:nth-child(1) { top: 19px; transform: rotate(45deg); }
+    .burger.on i:nth-child(2) { top: 19px; transform: rotate(-45deg); }
 
-    /* ---------- Menú móvil ---------- */
-    .movil { position: fixed; inset: var(--header-h, 64px) 0 0 0; z-index: 999; display: flex; flex-direction: column;
+    .movil { position: fixed; inset: var(--header-h, 72px) 0 0 0; z-index: 999; display: flex; flex-direction: column;
              justify-content: space-between; gap: 2rem; padding: 1rem 1.5rem 2rem; overflow-y: auto; background: var(--bg);
              opacity: 0; visibility: hidden; transform: translateY(-8px);
              transition: opacity .3s ease, transform .3s ease, visibility 0s linear .3s; }
@@ -165,14 +176,13 @@ const idDe = (ruta: string): string => ruta.split('#')[1] ?? '';
     .movil ol { list-style: none; margin: 0; padding: 0; }
     .movil li { border-bottom: 1px solid var(--line); opacity: 0; transform: translateY(10px);
                 transition: opacity .35s ease, transform .35s ease; }
-    .movil.abierto li { opacity: 1; transform: none; transition-delay: calc(var(--i, 0) * 45ms + 100ms); }
-    .m-link { display: flex; align-items: baseline; gap: 1rem; padding: 1rem .25rem; font-size: 1.3rem; font-weight: 700;
+    .movil.abierto li { opacity: 1; transform: none; transition-delay: calc(var(--i, 0) * 30ms + 40ms); }
+    .m-link { display: flex; align-items: baseline; gap: 1rem; padding: 0.75rem 0.25rem; font-size: 1.1rem; font-weight: 700;
               text-decoration: none; color: var(--ink); }
-    .m-link .n { width: 1.6rem; font-size: .75rem; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .m-link .n { width: 1.6rem; font-size: 0.75rem; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
     .m-link.on, .m-link.on .n, .m-link.cta { color: var(--brand); }
-    .m-pie { margin: 0; font-size: .78rem; color: var(--muted); }
+    .m-pie { margin: 0; font-size: 0.78rem; color: var(--muted); text-align: center; }
 
-    /* ---------- Logo ampliado ---------- */
     .dlg { width: min(500px, 92vw); padding: 2rem 1.5rem 1.75rem; border: 0; border-radius: 18px; text-align: center;
            color: var(--ink); box-shadow: 0 24px 60px rgba(0,0,0,.3); }
     .dlg::backdrop { background: rgba(20,24,26,.5); backdrop-filter: blur(6px); }
@@ -183,16 +193,16 @@ const idDe = (ruta: string): string => ruta.split('#')[1] ?? '';
     .dlg-x:hover { background: var(--band); color: var(--ink); }
     .dlg-img { display: grid; place-items: center; min-height: 190px; margin-bottom: 1rem; border-radius: 14px; background: var(--bg);
                border: 1px solid var(--line); }
-    .dlg-img img { max-width: 170px; max-height: 170px; object-fit: contain; }
+    .dlg-img img { max-width: 220px; max-height: 180px; object-fit: contain; }
     .dlg h3 { font-size: 1.15rem; font-weight: 800; }
     .dlg p { margin: .2rem 0 0; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--wood); }
 
-    /* ---------- Responsive ---------- */
-    @media (max-width: 1120px) {
+    /* Breakpoint ampliado para pantallas estándar en las que 12 ítems requieren compresión */
+    @media (max-width: 1360px) {
       .nav { display: none; }
       .burger { display: block; }
     }
-    @media (min-width: 1121px) {
+    @media (min-width: 1361px) {
       .movil { display: none; }
     }
   `],
@@ -222,7 +232,6 @@ export class HeaderComponent {
   constructor() {
     this.enInicio.set(this.esInicio());
 
-    // Al cambiar de página se recalcula la sección activa
     this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd), takeUntilDestroyed())
       .subscribe(() => {
@@ -230,7 +239,6 @@ export class HeaderComponent {
         setTimeout(() => this.actualizar(), 80);
       });
 
-    // Evita que la página se desplace por detrás del menú móvil abierto
     effect(() => {
       document.body.style.overflow = this.menuAbierto() ? 'hidden' : '';
     });
@@ -239,7 +247,6 @@ export class HeaderComponent {
       cancelAnimationFrame(this.raf);
     });
 
-    // El subrayado se reposiciona cuando cambia el enlace activo
     effect(() => {
       this.activo();
       this.enlaces();
@@ -253,7 +260,6 @@ export class HeaderComponent {
     });
   }
 
-  // ---------- Eventos globales ----------
   @HostListener('window:scroll')
   alScroll(): void {
     if (this.raf) return;
@@ -265,7 +271,7 @@ export class HeaderComponent {
 
   @HostListener('window:resize')
   alRedimensionar(): void {
-    if (window.innerWidth > 1120) this.menuAbierto.set(false);
+    if (window.innerWidth > 1360) this.menuAbierto.set(false);
     this.medir();
   }
 
@@ -274,7 +280,6 @@ export class HeaderComponent {
     this.menuAbierto.set(false);
   }
 
-  // ---------- Estado según el scroll ----------
   private actualizar(): void {
     const y = window.scrollY;
     const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -282,7 +287,6 @@ export class HeaderComponent {
     this.scrolled.set(y > 8);
     this.progreso.set(max > 0 ? Math.min(1, y / max) : 0);
 
-    // Se oculta al bajar y reaparece al subir
     const delta = y - this.ultimoY;
     if (this.menuAbierto() || y <= 120 || Date.now() < this.visibleHasta) {
       this.oculto.set(false);
@@ -296,7 +300,6 @@ export class HeaderComponent {
     this.activo.set(this.calcularActivo());
   }
 
-  /** Sección que está en pantalla (la última cuyo inicio ya pasó por debajo del encabezado). */
   private calcularActivo(): number {
     if (!this.enInicio()) return -1;
 
@@ -314,7 +317,6 @@ export class HeaderComponent {
     return alFinal && ultimoConSeccion > 0 ? ultimoConSeccion : activo;
   }
 
-  /** Posición del subrayado deslizante. */
   private medir(): void {
     const i = this.activo();
     const el = this.enlaces()[i]?.nativeElement;
@@ -326,10 +328,9 @@ export class HeaderComponent {
     const n = this.nav().nativeElement.getBoundingClientRect();
     const r = el.getBoundingClientRect();
     if (!r.width) return;
-    this.ind.set({ x: r.left - n.left + 12, w: r.width - 24, visible: true });
+    this.ind.set({ x: r.left - n.left + 6, w: r.width - 12, visible: true });
   }
 
-  // ---------- Navegación ----------
   href(it: ItemNav): string {
     return it.ruta;
   }
@@ -339,7 +340,7 @@ export class HeaderComponent {
   }
 
   irA(ev: MouseEvent, it: ItemNav): void {
-    if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.button !== 0) return; // permite abrir en otra pestaña
+    if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.button !== 0) return;
     ev.preventDefault();
     this.menuAbierto.set(false);
     this.visibleHasta = Date.now() + 900;
@@ -370,7 +371,6 @@ export class HeaderComponent {
     window.scrollTo({ top: Math.max(0, y), behavior: this.suave() });
   }
 
-  /** La página de inicio se carga bajo demanda: se espera a que exista la sección. */
   private esperarSeccion(id: string, intentos = 25): void {
     const el = document.getElementById(id);
     if (el) {
@@ -384,7 +384,6 @@ export class HeaderComponent {
     return matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
   }
 
-  // ---------- Logo ampliado ----------
   abrirLogo(): void {
     this.menuAbierto.set(false);
     const d = this.dlgLogo().nativeElement;

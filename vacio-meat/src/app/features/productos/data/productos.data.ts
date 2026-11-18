@@ -5,7 +5,7 @@ export const PRODUCTOS: Producto[] = [
 
   {
     nombre: 'LIDERAZGO Y UBICACIÓN',
-    descripcion: 'Líder / Representante:Orlando Cuaran.  Líder / Proyecto: Granja Porcícola El Campanario. Ubicación propuesta: Zona rural / finca en el municipio de Linares, Nariño.',
+    descripcion: 'Líder / Representante:Jhojan Portilla.  Líder / Proyecto: Granja Porcícola El Campanario. Ubicación propuesta: Zona rural / finca en el municipio de Linares, Nariño.',
     imagen: 'images/productos/nosotros.png',
   },
 

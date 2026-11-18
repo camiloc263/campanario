@@ -22,7 +22,7 @@ export const GERENCIA: RolEquipo = {
   id: 'gerencia',
   cargo: 'Administración / Gerencia',
   nivel: 'Dirección estratégica',
-  responsable: 'Orlando Cuaran',
+  responsable: 'Jhojan Portilla',
   funcion:
     'Planeación estratégica, coordinación general del negocio, gestión comercial y representación asociativa.',
   responsabilidades: [

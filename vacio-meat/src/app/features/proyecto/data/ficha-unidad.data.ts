@@ -132,7 +132,7 @@ export const BLOQUES: BloqueFicha[] = [
       },
       {
         rotulo: 'Nota técnica',
-        texto: 'Los protocolos sanitarios, capacidad instalada, rutinas de bioseguridad y precios de comercialización se rigen por la normatividad pecuaria colombiana y los acuerdos internos de la asociación liderada por Orlando Cuaran.',
+        texto: 'Los protocolos sanitarios, capacidad instalada, rutinas de bioseguridad y precios de comercialización se rigen por la normatividad pecuaria colombiana y los acuerdos internos de la asociación liderada por Jhojan Portilla.',
       },
     ],
   },

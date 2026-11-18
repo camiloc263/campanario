@@ -58,7 +58,7 @@ const plano = (s: string): string =>
       }
     </ng-template>
 
-    <section class="section">
+    <section class="section" id="canvas">
       <div class="wrap">
 
         <header class="cab">

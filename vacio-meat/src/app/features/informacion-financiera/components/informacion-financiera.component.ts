@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { INFORMACION_FINANCIERA_DATA } from '../data/informacion-financiera';
 
 @Component({
-    selector: 'app-informacion-financiera',
-    standalone: true,
-    imports: [CommonModule],
-    template: `
-    <section class="section band">
+  selector: 'app-informacion-financiera',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
+    <section class="section band" id="financiera">
       <div class="wrap-finance">
         
         <!-- ENCABEZADO DE SECCIÓN -->
@@ -148,7 +148,7 @@ import { INFORMACION_FINANCIERA_DATA } from '../data/informacion-financiera';
       </div>
     </section>
   `,
-    styles: [`
+  styles: [`
     .band {
       background: #fbf9f5;
       padding: 3rem 1rem;
@@ -536,36 +536,36 @@ import { INFORMACION_FINANCIERA_DATA } from '../data/informacion-financiera';
   `]
 })
 export class InformacionFinancieraComponent {
-    data = INFORMACION_FINANCIERA_DATA;
+  data = INFORMACION_FINANCIERA_DATA;
 
-    vistaActiva: 'todo' | 'kpis' | 'proyecciones' = 'todo';
-    factorEscenario: number = 1;
-    kpiSeleccionado: string | null = null;
+  vistaActiva: 'todo' | 'kpis' | 'proyecciones' = 'todo';
+  factorEscenario: number = 1;
+  kpiSeleccionado: string | null = null;
 
-    cambiarEscenario(factor: number) {
-        this.factorEscenario = factor;
-    }
+  cambiarEscenario(factor: number) {
+    this.factorEscenario = factor;
+  }
 
-    toggleKpi(id: string) {
-        this.kpiSeleccionado = this.kpiSeleccionado === id ? null : id;
-    }
+  toggleKpi(id: string) {
+    this.kpiSeleccionado = this.kpiSeleccionado === id ? null : id;
+  }
 
-    get totalVentasCalculado(): number {
-        return this.data.ingresosProyectados.reduce(
-            (acc, item) => acc + item.librasBase * item.precioLibra * this.factorEscenario,
-            0
-        );
-    }
+  get totalVentasCalculado(): number {
+    return this.data.ingresosProyectados.reduce(
+      (acc, item) => acc + item.librasBase * item.precioLibra * this.factorEscenario,
+      0
+    );
+  }
 
-    get margenOperativoCalculado(): number {
-        return this.totalVentasCalculado - (this.data.costosFijosValor + this.data.gastosAdminValor);
-    }
+  get margenOperativoCalculado(): number {
+    return this.totalVentasCalculado - (this.data.costosFijosValor + this.data.gastosAdminValor);
+  }
 
-    formatearMoneda(valor: number): string {
-        return '$' + Math.round(valor).toLocaleString('es-CO');
-    }
+  formatearMoneda(valor: number): string {
+    return '$' + Math.round(valor).toLocaleString('es-CO');
+  }
 
-    formatearNumero(valor: number): string {
-        return Math.round(valor).toLocaleString('es-CO');
-    }
+  formatearNumero(valor: number): string {
+    return Math.round(valor).toLocaleString('es-CO');
+  }
 }
